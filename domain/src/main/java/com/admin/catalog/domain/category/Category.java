@@ -1,9 +1,9 @@
 package com.admin.catalog.domain.category;
 
 import com.admin.catalog.domain.AggregateRoot;
+import com.admin.catalog.domain.validation.ValidationHandler;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class Category extends AggregateRoot<CategoryID> {
 
@@ -36,6 +36,11 @@ public class Category extends AggregateRoot<CategoryID> {
         var id = CategoryID.unique();
         var now = Instant.now();
         return new Category(id, name, description, isActive, now, now, null);
+    }
+
+    @Override
+    public void validate(final ValidationHandler handler) {
+        new CategoryValidator(this, handler).validate();
     }
 
     public CategoryID getId() {

@@ -1,8 +1,15 @@
-package com.admin.catalog.domain.category;
+package com.admin.catalog.domain;
 
-public abstract class AggregateRoot<ID extends Identifier> extends Entity<ID> {
+import com.admin.catalog.domain.validation.ValidationHandler;
+
+public class AggregateRoot<ID extends Identifier> extends Entity<ID> {
 
     protected AggregateRoot(final ID id) {
         super(id);
+    }
+
+    @Override
+    public void validate(ValidationHandler handler) {
+
     }
 }

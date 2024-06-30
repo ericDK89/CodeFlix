@@ -1,5 +1,7 @@
 package com.admin.catalog.domain.category;
 
+import com.admin.catalog.domain.exceptions.DomainException;
+import com.admin.catalog.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -29,13 +31,13 @@ public class CategoryTest {
         final var expectedDescription = "Test";
         final var expectedIsActive = true;
 
-        var category = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+        final var category = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
 
-        var exception = Assertions.assertThrows(DomainException.class, () -> {
-            category.validate();
+        final var exception = Assertions.assertThrows(DomainException.class, () -> {
+            category.validate(new ThrowsValidationHandler());
         });
-        
-        Assertions.assertEquals("'name' should not be null", exception.getErrors().get(0).getMessage());
+
+        Assertions.assertEquals("'name' should not be null", exception.getErrors().getFirst().message());
         Assertions.assertEquals(1, exception.getErrors().size());
     }
 }
